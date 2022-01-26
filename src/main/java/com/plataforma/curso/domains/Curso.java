@@ -1,4 +1,4 @@
-package com.frederico.demo.domains;
+package com.plataforma.curso.domains;
 
 import java.time.LocalDate;
 
@@ -69,5 +69,18 @@ public class Curso {
 
     public void setDataTermino(LocalDate dataTermino) {
         this.dataTermino = dataTermino;
+    }
+
+    @Override
+    public String toString() {
+        return "Curso{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", descricao='" + descricao + '\'' +
+                ", quantidadeAluno=" + quantidadeAluno +
+                ", dataInicio=" + dataInicio +
+                ", professor=" + professor +
+                ", dataTermino=" + dataTermino +
+                '}';
     }
 }

@@ -1,6 +1,6 @@
-package com.frederico.demo.domains;
+package com.plataforma.curso.domains;
 
-public class Aluno {
+public class Professor {
 
     private Long id;
     private Integer matricula;
@@ -9,8 +9,9 @@ public class Aluno {
     private String sexo;
     private Long telefone;
     private String email;
+    private String disciplina;
 
-    public Aluno() {
+    public Professor() {
     }
 
     public Long getId() {
@@ -67,5 +68,27 @@ public class Aluno {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getDisciplina() {
+        return disciplina;
+    }
+
+    public void setDisciplina(String disciplina) {
+        this.disciplina = disciplina;
+    }
+
+    @Override
+    public String toString() {
+        return "Professor{" +
+                "id=" + id +
+                ", matricula=" + matricula +
+                ", nome='" + nome + '\'' +
+                ", dataNascimento=" + dataNascimento +
+                ", sexo='" + sexo + '\'' +
+                ", telefone=" + telefone +
+                ", email='" + email + '\'' +
+                ", disciplina='" + disciplina + '\'' +
+                '}';
     }
 }
