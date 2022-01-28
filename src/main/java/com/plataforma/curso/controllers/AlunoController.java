@@ -1,6 +1,8 @@
 package com.plataforma.curso.controllers;
 
 import com.plataforma.curso.domains.Aluno;
+import com.plataforma.curso.services.AlunoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,49 +12,44 @@ import java.util.List;
 @RestController
 public class AlunoController {
 
+    @Autowired
+    private AlunoService alunoService;
+
     @PostMapping
     public ResponseEntity<Aluno> criar(@RequestBody Aluno aluno) {
-        aluno.setId(1L);
-        return ResponseEntity.created(null).body(aluno);
+        Aluno alunoCriar = alunoService.criar(aluno);
+        return ResponseEntity.created(null).body(alunoCriar);
 
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<Aluno> atualizar(@RequestBody Aluno aluno, @PathVariable Long id) {
-        aluno.setId(id);
-        return ResponseEntity.ok(aluno);
+        Aluno alunoAtualizar = alunoService.atualizar(aluno, id);
+        return ResponseEntity.ok(alunoAtualizar);
 
 
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletar(@PathVariable Long id) {
+       alunoService.deletar(id);
         return ResponseEntity.noContent().build();
-
     }
-
     @GetMapping
     public ResponseEntity<List<Aluno>> listar() {
-        Aluno aluno1 = new Aluno();
-        aluno1.setId(2L);
-        aluno1.setNome("Fred");
 
-        Aluno aluno2 = new Aluno();
-        aluno2.setId(3L);
-        aluno2.setNome("Joao");
+       List listaAluno = alunoService.listar();
 
-        return ResponseEntity.ok(List.of(aluno1, aluno2));
-
+        return ResponseEntity.ok(listaAluno);
 
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Aluno> obter(@PathVariable Long id) {
-        Aluno aluno3 = new Aluno();
-        aluno3.setId(id);
-        aluno3.setNome("Pedro");
 
-        return ResponseEntity.ok(aluno3);
+        Aluno alunoObter = alunoService.obter(id);
+
+        return ResponseEntity.ok(alunoObter);
 
 
     }

@@ -1,6 +1,8 @@
 package com.plataforma.curso.controllers;
 
 import com.plataforma.curso.domains.Turma;
+import com.plataforma.curso.services.TurmaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,50 +12,43 @@ import java.util.List;
 @RestController
 public class TurmaController {
 
+    @Autowired
+    private TurmaService turmaService;
+
     @PostMapping
     public ResponseEntity<Turma> criar(@RequestBody Turma turma) {
-        turma.setId(8L);
-        return ResponseEntity.created(null).body(turma);
-
+        Turma turmaCriar = turmaService.criar(turma);
+        return ResponseEntity.created(null).body(turmaCriar);
 
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<Turma> atualizar(@RequestBody Turma turma, @PathVariable Long id) {
-        turma.setId(id);
-        return ResponseEntity.ok(turma);
-
+        Turma turmaAtualizar = turmaService.atualizar(turma, id);
+        return ResponseEntity.ok(turmaAtualizar);
 
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletar(@PathVariable Long id) {
+        turmaService.deletar(id);
         return ResponseEntity.noContent().build();
 
     }
 
     @GetMapping
     public ResponseEntity<List<Turma>> listar() {
-       Turma turma1 = new Turma();
-       turma1.setId(10L);
-       turma1.setNome("turmaA");
+ ;      List listaTurma = turmaService.listar();
 
-       Turma turma2 = new Turma();
-       turma2.setId(11L);
-       turma2.setNome("turmaB");
+       return ResponseEntity.ok(listaTurma);
 
-       return ResponseEntity.ok(List.of(
-               turma1, turma2
-       ));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Turma> obter(@PathVariable Long id) {
-        Turma turma1 = new Turma();
-        turma1.setId(10L);
-        turma1.setNome("turmaA");
+      Turma turmaObter = turmaService.obter(id);
 
-        return ResponseEntity.ok(turma1);
+        return ResponseEntity.ok(turmaObter);
 
     }
 }
