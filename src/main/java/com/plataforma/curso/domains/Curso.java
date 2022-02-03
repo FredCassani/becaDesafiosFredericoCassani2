@@ -1,9 +1,16 @@
 package com.plataforma.curso.domains;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.LocalDate;
+import java.util.Objects;
 
+@Entity
 public class Curso {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
     private String descricao;
@@ -12,11 +19,21 @@ public class Curso {
     private Integer professor;
     private LocalDate dataTermino;
 
-    public Curso() {
-    }
-
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Curso curso = (Curso) o;
+        return id.equals(curso.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     public void setId(Long id) {
@@ -69,18 +86,5 @@ public class Curso {
 
     public void setDataTermino(LocalDate dataTermino) {
         this.dataTermino = dataTermino;
-    }
-
-    @Override
-    public String toString() {
-        return "Curso{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", descricao='" + descricao + '\'' +
-                ", quantidadeAluno=" + quantidadeAluno +
-                ", dataInicio=" + dataInicio +
-                ", professor=" + professor +
-                ", dataTermino=" + dataTermino +
-                '}';
     }
 }

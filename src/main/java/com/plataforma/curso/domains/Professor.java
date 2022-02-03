@@ -1,7 +1,16 @@
 package com.plataforma.curso.domains;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import java.util.Objects;
+
+@Entity
 public class Professor {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Integer matricula;
     private String nome;
@@ -11,7 +20,17 @@ public class Professor {
     private String email;
     private String disciplina;
 
-    public Professor() {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Professor professor = (Professor) o;
+        return id.equals(professor.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     public Long getId() {
@@ -76,19 +95,5 @@ public class Professor {
 
     public void setDisciplina(String disciplina) {
         this.disciplina = disciplina;
-    }
-
-    @Override
-    public String toString() {
-        return "Professor{" +
-                "id=" + id +
-                ", matricula=" + matricula +
-                ", nome='" + nome + '\'' +
-                ", dataNascimento=" + dataNascimento +
-                ", sexo='" + sexo + '\'' +
-                ", telefone=" + telefone +
-                ", email='" + email + '\'' +
-                ", disciplina='" + disciplina + '\'' +
-                '}';
     }
 }

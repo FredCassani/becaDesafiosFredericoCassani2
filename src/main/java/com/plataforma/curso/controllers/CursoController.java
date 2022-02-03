@@ -1,7 +1,7 @@
 package com.plataforma.curso.controllers;
 
 import com.plataforma.curso.domains.Curso;
-import com.plataforma.curso.services.CursoService;
+import com.plataforma.curso.services.servicesImp.CursoServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +13,7 @@ import java.util.List;
 public class CursoController {
 
     @Autowired
-    private CursoService cursoService;
+    private CursoServiceImp cursoService;
 
     @PostMapping
     public ResponseEntity<Curso> criar(@RequestBody Curso curso) {

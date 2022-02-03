@@ -1,7 +1,7 @@
 package com.plataforma.curso.controllers;
 
 import com.plataforma.curso.domains.Turma;
-import com.plataforma.curso.services.TurmaService;
+import com.plataforma.curso.services.servicesImp.TurmaServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +13,7 @@ import java.util.List;
 public class TurmaController {
 
     @Autowired
-    private TurmaService turmaService;
+    private TurmaServiceImp turmaService;
 
     @PostMapping
     public ResponseEntity<Turma> criar(@RequestBody Turma turma) {

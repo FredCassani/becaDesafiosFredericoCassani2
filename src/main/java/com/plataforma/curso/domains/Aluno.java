@@ -1,7 +1,16 @@
 package com.plataforma.curso.domains;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import java.util.Objects;
+
+@Entity
 public class Aluno {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Integer matricula;
     private String nome;
@@ -10,7 +19,17 @@ public class Aluno {
     private Long telefone;
     private String email;
 
-    public Aluno() {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Aluno aluno = (Aluno) o;
+        return id.equals(aluno.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     public Long getId() {
@@ -67,18 +86,5 @@ public class Aluno {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    @Override
-    public String toString() {
-        return "Aluno{" +
-                "id=" + id +
-                ", matricula=" + matricula +
-                ", nome='" + nome + '\'' +
-                ", dataNascimento=" + dataNascimento +
-                ", sexo='" + sexo + '\'' +
-                ", telefone=" + telefone +
-                ", email='" + email + '\'' +
-                '}';
     }
 }

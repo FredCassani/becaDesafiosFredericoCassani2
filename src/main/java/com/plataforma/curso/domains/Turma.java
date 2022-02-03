@@ -1,17 +1,34 @@
 package com.plataforma.curso.domains;
 
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
+@Entity
 public class Turma {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
+    @OneToOne
     private Professor professor;
-    private String curso;
+    @OneToOne
+    private Curso curso;
     private LocalDate dataInicio;
     private LocalDate dataTermino;
 
-    public Turma() {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Turma turma = (Turma) o;
+        return id.equals(turma.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     public Long getId() {
@@ -38,11 +55,11 @@ public class Turma {
         this.professor = professor;
     }
 
-    public String getCurso() {
+    public Curso getCurso() {
         return curso;
     }
 
-    public void setCurso(String curso) {
+    public void setCurso(Curso curso) {
         this.curso = curso;
     }
 
@@ -60,17 +77,5 @@ public class Turma {
 
     public void setDataTermino(LocalDate dataTermino) {
         this.dataTermino = dataTermino;
-    }
-
-    @Override
-    public String toString() {
-        return "Turma{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", professor=" + professor +
-                ", curso='" + curso + '\'' +
-                ", dataInicio=" + dataInicio +
-                ", dataTermino=" + dataTermino +
-                '}';
     }
 }
