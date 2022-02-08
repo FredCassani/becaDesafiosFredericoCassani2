@@ -1,17 +1,20 @@
 package com.plataforma.curso.services;
 
 import com.plataforma.curso.domains.Professor;
+import com.plataforma.curso.dtos.requests.ProfessorRequest;
+import com.plataforma.curso.dtos.responses.ProfessorResponse;
+
 import java.util.List;
 
 public interface ProfessorService {
 
-    Professor criar(Professor professor);
+    ProfessorResponse criar(ProfessorRequest professor);
 
-    Professor atualizar(Professor professor, Long id);
+    ProfessorResponse atualizar(ProfessorRequest professor, Long id);
 
     void deletar(Long id);
 
-    List<Professor> listar();
+    List<ProfessorResponse> listar();
 
-    Professor obter(Long id);
+    ProfessorResponse obter(Long id);
 }

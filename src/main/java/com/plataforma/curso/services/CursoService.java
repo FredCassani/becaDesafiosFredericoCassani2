@@ -1,17 +1,20 @@
 package com.plataforma.curso.services;
 
 import com.plataforma.curso.domains.Curso;
+import com.plataforma.curso.dtos.requests.CursoRequest;
+import com.plataforma.curso.dtos.responses.CursoResponse;
+
 import java.util.List;
 
 public interface CursoService {
 
-    Curso criar(Curso curso);
+    CursoResponse criar(CursoRequest curso);
 
-    Curso atualizar(Curso curso, Long id);
+    CursoResponse atualizar(CursoRequest curso, Long id);
 
     void deletar(Long id);
 
-    List<Curso> listar();
+    List<CursoResponse> listar();
 
-    Curso obter(Long id);
+    CursoResponse obter(Long id);
 }

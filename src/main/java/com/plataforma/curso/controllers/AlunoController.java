@@ -1,11 +1,14 @@
 package com.plataforma.curso.controllers;
 
 import com.plataforma.curso.domains.Aluno;
+import com.plataforma.curso.dtos.requests.AlunoRequest;
+import com.plataforma.curso.dtos.responses.AlunoResponse;
 import com.plataforma.curso.services.servicesImp.AlunoServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequestMapping("/aluno")
@@ -16,15 +19,15 @@ public class AlunoController {
     private AlunoServiceImp alunoServiceImp;
 
     @PostMapping
-    public ResponseEntity<Aluno> criar(@RequestBody Aluno aluno) {
-        Aluno alunoCriar = alunoServiceImp.criar(aluno);
+    public ResponseEntity<AlunoResponse> criar(@RequestBody @Valid AlunoRequest postAlunoRequest) {
+        AlunoResponse alunoCriar = alunoServiceImp.criar(postAlunoRequest);
         return ResponseEntity.created(null).body(alunoCriar);
 
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Aluno> atualizar(@RequestBody Aluno aluno, @PathVariable Long id) {
-        Aluno alunoAtualizar = alunoServiceImp.atualizar(aluno, id);
+    public ResponseEntity<AlunoResponse> atualizar(@RequestBody AlunoRequest aluno, @PathVariable Long id) {
+        AlunoResponse alunoAtualizar = alunoServiceImp.atualizar(aluno, id);
         return ResponseEntity.ok(alunoAtualizar);
 
     }
@@ -34,7 +37,7 @@ public class AlunoController {
        return alunoServiceImp.deletar(id);
     }
     @GetMapping
-    public ResponseEntity<List<Aluno>> listar() {
+    public ResponseEntity<List<AlunoResponse>> listar() {
 
        List listaAluno = alunoServiceImp.listar();
 
@@ -43,11 +46,11 @@ public class AlunoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Aluno> obter(@PathVariable Long id) {
+    public ResponseEntity<AlunoResponse> obter(@PathVariable Long id) {
 
-        Aluno alunoObter = alunoServiceImp.obter(id);
+        AlunoResponse alunoResponse = alunoServiceImp.obter(id);
 
-        return ResponseEntity.ok(alunoObter);
+        return ResponseEntity.ok(alunoResponse);
 
     }
 }

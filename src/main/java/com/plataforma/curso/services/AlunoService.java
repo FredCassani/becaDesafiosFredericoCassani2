@@ -1,20 +1,22 @@
 package com.plataforma.curso.services;
 
 import com.plataforma.curso.domains.Aluno;
+import com.plataforma.curso.dtos.requests.AlunoRequest;
+import com.plataforma.curso.dtos.responses.AlunoResponse;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface AlunoService {
 
-    Aluno criar(Aluno aluno);
+    AlunoResponse criar(AlunoRequest alunoRequest);
 
-    Aluno atualizar(Aluno aluno, Long id);
+    AlunoResponse atualizar(AlunoRequest alunoRequest , Long id);
 
     ResponseEntity<?> deletar(Long id);
 
-    List<Aluno> listar();
+    List<AlunoResponse> listar();
 
-    Aluno obter(Long id);
+    AlunoResponse obter(Long id);
 }
 

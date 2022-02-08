@@ -1,38 +1,43 @@
 package com.plataforma.curso.services.servicesImp;
 
 import com.plataforma.curso.domains.Aluno;
+import com.plataforma.curso.dtos.requests.AlunoRequest;
+import com.plataforma.curso.dtos.responses.AlunoResponse;
+import com.plataforma.curso.mappers.MapperAlunoAtualizar;
+import com.plataforma.curso.mappers.MapperAlunoRequest;
+import com.plataforma.curso.mappers.MapperAlunoResponse;
 import com.plataforma.curso.repositories.AlunoRepository;
 import com.plataforma.curso.services.AlunoService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AlunoServiceImp implements AlunoService {
 
-    @Autowired
-    private AlunoRepository alunoRepository;
+    private final AlunoRepository alunoRepository;
+    private final MapperAlunoRequest mapperAlunoRequest;
+    private final MapperAlunoResponse mapperAlunoResponse;
+    private final MapperAlunoAtualizar mapperAlunoAtualizar;
 
-    public Aluno criar(Aluno aluno) {
-        Aluno alunoCriado = alunoRepository.save(aluno);
-        return alunoCriado;
+    public AlunoResponse criar(AlunoRequest alunoRequest) {
+
+        Aluno aluno = mapperAlunoRequest.toModel(alunoRequest);
+        alunoRepository.save(aluno);
+        AlunoResponse alunoconvertido2 = mapperAlunoResponse.toResponse(aluno);
+
+        return alunoconvertido2;
     }
 
-    public Aluno atualizar(Aluno aluno, Long id) {
-        Aluno alunoListado = this.obter(id);
-        alunoListado.setId(id);
-        alunoListado.setNome(aluno.getNome());
-        alunoListado.setEmail(aluno.getEmail());
-        alunoListado.setSexo(aluno.getSexo());
-        alunoListado.setMatricula(aluno.getMatricula());
-        alunoListado.setDataNascimento(aluno.getDataNascimento());
-        alunoListado.setTelefone(aluno.getTelefone());
-
+    public AlunoResponse atualizar(AlunoRequest alunoRequest ,  Long id) {
+        Aluno alunoListado = alunoRepository.findById(id).get();
+        mapperAlunoAtualizar.atualizar(alunoRequest , alunoListado);
         alunoRepository.save(alunoListado);
-        return alunoListado;
+        return mapperAlunoResponse.toResponse(alunoListado);
 
     }
 
@@ -47,15 +52,20 @@ public class AlunoServiceImp implements AlunoService {
 
     }
 
-    public List<Aluno> listar() {
+    public List<AlunoResponse> listar() {
+        List<Aluno> listaAluno =  alunoRepository.findAll();
+        List<AlunoResponse> alunoResponses = new ArrayList<>();
+        listaAluno.stream().forEach(aluno -> {
+            alunoResponses.add(mapperAlunoResponse.toResponse(aluno));
 
-        return alunoRepository.findAll();
+        });
+        return alunoResponses;
     }
 
-    public Aluno obter(Long id) {
+    public AlunoResponse  obter(Long id) {
         Aluno alunoObtido = alunoRepository.findById(id).get();
-
-        return alunoObtido;
+        AlunoResponse alunoResponse = mapperAlunoResponse.toResponse(alunoObtido);
+        return alunoResponse;
     }
 }
 

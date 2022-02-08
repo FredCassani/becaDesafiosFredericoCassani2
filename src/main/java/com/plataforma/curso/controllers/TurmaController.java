@@ -1,6 +1,8 @@
 package com.plataforma.curso.controllers;
 
 import com.plataforma.curso.domains.Turma;
+import com.plataforma.curso.dtos.requests.TurmaRequest;
+import com.plataforma.curso.dtos.responses.TurmaResponse;
 import com.plataforma.curso.services.servicesImp.TurmaServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,15 +18,15 @@ public class TurmaController {
     private TurmaServiceImp turmaService;
 
     @PostMapping
-    public ResponseEntity<Turma> criar(@RequestBody Turma turma) {
-        Turma turmaCriar = turmaService.criar(turma);
+    public ResponseEntity<TurmaResponse> criar(@RequestBody TurmaRequest turma) {
+        TurmaResponse turmaCriar = turmaService.criar(turma);
         return ResponseEntity.created(null).body(turmaCriar);
 
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Turma> atualizar(@RequestBody Turma turma, @PathVariable Long id) {
-        Turma turmaAtualizar = turmaService.atualizar(turma, id);
+    public ResponseEntity<TurmaResponse> atualizar(@RequestBody TurmaRequest turma, @PathVariable Long id) {
+        TurmaResponse turmaAtualizar = turmaService.atualizar(turma, id);
         return ResponseEntity.ok(turmaAtualizar);
 
     }
@@ -37,7 +39,7 @@ public class TurmaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Turma>> listar() {
+    public ResponseEntity<List<TurmaResponse>> listar() {
  ;      List listaTurma = turmaService.listar();
 
        return ResponseEntity.ok(listaTurma);
@@ -45,8 +47,8 @@ public class TurmaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Turma> obter(@PathVariable Long id) {
-      Turma turmaObter = turmaService.obter(id);
+    public ResponseEntity<TurmaResponse> obter(@PathVariable Long id) {
+      TurmaResponse turmaObter = turmaService.obter(id);
 
         return ResponseEntity.ok(turmaObter);
 

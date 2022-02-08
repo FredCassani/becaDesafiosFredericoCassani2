@@ -1,6 +1,8 @@
 package com.plataforma.curso.controllers;
 
 import com.plataforma.curso.domains.Professor;
+import com.plataforma.curso.dtos.requests.ProfessorRequest;
+import com.plataforma.curso.dtos.responses.ProfessorResponse;
 import com.plataforma.curso.services.servicesImp.ProfessorServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,15 +18,15 @@ public class ProfessorControler {
     private ProfessorServiceImp professorService;
 
     @PostMapping
-    public ResponseEntity<Professor> criar(@RequestBody Professor professor) {
-        Professor professorCriar = professorService.criar(professor);
+    public ResponseEntity<ProfessorResponse> criar(@RequestBody ProfessorRequest professor) {
+        ProfessorResponse professorCriar = professorService.criar(professor);
         return ResponseEntity.created(null).body(professorCriar);
 
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Professor> atualizar(@RequestBody Professor professor, @PathVariable Long id) {
-        Professor professorAtualizar = professorService.atualizar(professor, id);
+    public ResponseEntity<ProfessorResponse> atualizar(@RequestBody ProfessorRequest professor, @PathVariable Long id) {
+        ProfessorResponse professorAtualizar = professorService.atualizar(professor, id);
         return ResponseEntity.ok(professorAtualizar);
 
     }
@@ -37,7 +39,7 @@ public class ProfessorControler {
     }
 
     @GetMapping
-    public ResponseEntity<List<Professor>> listar() {
+    public ResponseEntity<List<ProfessorResponse>> listar() {
          List listaProfessor = professorService.listar();
 
         return ResponseEntity.ok(listaProfessor);
@@ -45,8 +47,8 @@ public class ProfessorControler {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Professor> obter(@PathVariable Long id) {
-        Professor professorObter = professorService.obter(id);
+    public ResponseEntity<ProfessorResponse> obter(@PathVariable Long id) {
+        ProfessorResponse professorObter = professorService.obter(id);
 
         return ResponseEntity.ok(professorObter);
     }

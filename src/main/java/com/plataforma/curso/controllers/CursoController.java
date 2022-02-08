@@ -1,6 +1,8 @@
 package com.plataforma.curso.controllers;
 
 import com.plataforma.curso.domains.Curso;
+import com.plataforma.curso.dtos.requests.CursoRequest;
+import com.plataforma.curso.dtos.responses.CursoResponse;
 import com.plataforma.curso.services.servicesImp.CursoServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,16 +18,16 @@ public class CursoController {
     private CursoServiceImp cursoService;
 
     @PostMapping
-    public ResponseEntity<Curso> criar(@RequestBody Curso curso) {
-        Curso cursoCriar = cursoService.criar(curso);
+    public ResponseEntity<CursoResponse> criar(@RequestBody CursoRequest curso) {
+        CursoResponse cursoCriar = cursoService.criar(curso);
         return ResponseEntity.created(null).body(cursoCriar);
 
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Curso> atualizar(@RequestBody Curso curso, @PathVariable Long id) {
-        Curso cursoAtualizar = cursoService.atualizar(curso, id);
-        return ResponseEntity.ok(curso);
+    public ResponseEntity<CursoResponse> atualizar(@RequestBody CursoRequest curso, @PathVariable Long id) {
+        CursoResponse cursoAtualizar = cursoService.atualizar(curso, id);
+        return ResponseEntity.ok(cursoAtualizar);
 
    }
 
@@ -37,7 +39,7 @@ public class CursoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Curso>> listar() {
+    public ResponseEntity<List<CursoResponse>> listar() {
         List listaAluno = cursoService.listar();
 
         return ResponseEntity.ok(listaAluno);
@@ -45,8 +47,8 @@ public class CursoController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Curso> obter(@PathVariable Long id) {
-       Curso obterCurso = cursoService.obter(id);
+    public ResponseEntity<CursoResponse> obter(@PathVariable Long id) {
+       CursoResponse obterCurso = cursoService.obter(id);
 
         return ResponseEntity.ok(obterCurso);
 

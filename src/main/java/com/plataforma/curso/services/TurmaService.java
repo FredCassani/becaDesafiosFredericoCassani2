@@ -1,17 +1,20 @@
 package com.plataforma.curso.services;
 
 import com.plataforma.curso.domains.Turma;
+import com.plataforma.curso.dtos.requests.TurmaRequest;
+import com.plataforma.curso.dtos.responses.TurmaResponse;
+
 import java.util.List;
 
 public interface TurmaService {
 
-    Turma criar(Turma turma);
+    TurmaResponse criar(TurmaRequest turma);
 
-    Turma atualizar(Turma turma, Long id);
+    TurmaResponse atualizar(TurmaRequest turma, Long id);
 
     void deletar(Long id);
 
-    List<Turma> listar();
+    List<TurmaResponse> listar();
 
-    Turma obter(Long id);
+    TurmaResponse obter(Long id);
 }

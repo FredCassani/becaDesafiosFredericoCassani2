@@ -1,39 +1,43 @@
 package com.plataforma.curso.services.servicesImp;
 
 import com.plataforma.curso.domains.Professor;
+import com.plataforma.curso.dtos.requests.ProfessorRequest;
+import com.plataforma.curso.dtos.responses.ProfessorResponse;
+import com.plataforma.curso.mappers.MapperProfessorAtualizar;
+import com.plataforma.curso.mappers.MapperProfessorRequest;
+import com.plataforma.curso.mappers.MapperProfessorResponse;
 import com.plataforma.curso.repositories.ProfessorRepository;
 import com.plataforma.curso.services.ProfessorService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProfessorServiceImp implements ProfessorService {
 
-    @Autowired
-    private ProfessorRepository professorRepository;
+    private final ProfessorRepository professorRepository;
+    private final MapperProfessorRequest mapperProfessorRequest;
+    private final MapperProfessorResponse mapperProfessorResponse;
+    private final MapperProfessorAtualizar mapperProfessorAtualizar;
 
-    public Professor criar(Professor professor) {
+    public ProfessorResponse criar(ProfessorRequest professorRequest) {
 
-        Professor professorCriado = professorRepository.save(professor);
-        return professorCriado;
+        Professor professorCriado = mapperProfessorRequest.toModel(professorRequest);
+        professorRepository.save(professorCriado);
+        return mapperProfessorResponse.toResponse(professorCriado);
     }
 
-    public Professor atualizar(Professor professor, Long id) {
+    public ProfessorResponse atualizar(ProfessorRequest professorRequest, Long id) {
 
-        Professor professorAtualizado = this.obter(id);
-        professorAtualizado.setId(id);
-        professorAtualizado.setNome(professor.getNome());
-        professorAtualizado.setDataNascimento(professor.getDataNascimento());
-        professorAtualizado.setEmail(professor.getEmail());
-        professorAtualizado.setSexo(professor.getSexo());
-        professorAtualizado.setDisciplina(professor.getDisciplina());
-        professorAtualizado.setMatricula(professor.getMatricula());
-        professorAtualizado.setTelefone(professor.getTelefone());
+        Professor professorAtualizado = professorRepository.findById(id).get();
+        mapperProfessorAtualizar.atualizar(professorRequest, professorAtualizado);
         professorRepository.save(professorAtualizado);
 
-        return professorAtualizado;
+        return mapperProfessorResponse.toResponse(professorAtualizado);
     }
         public void deletar(Long id) {
 
@@ -41,15 +45,19 @@ public class ProfessorServiceImp implements ProfessorService {
 
     }
 
-    public List<Professor> listar() {
+    public List<ProfessorResponse> listar() {
 
-        return professorRepository.findAll();
+        List<Professor> listaDeProfessores = professorRepository.findAll();
+        List<ProfessorResponse> listaResponse = new ArrayList<>();
+        listaDeProfessores.stream().forEach(professor ->
+                listaResponse.add(mapperProfessorResponse.toResponse(professor)));
+        return listaResponse;
+
     }
-
-    public Professor obter(Long id) {
+    public ProfessorResponse obter(Long id) {
       Professor professorObtido = professorRepository.findById(id).get();
 
-      return professorObtido;
+      return mapperProfessorResponse.toResponse(professorObtido);
 
     }
 }
