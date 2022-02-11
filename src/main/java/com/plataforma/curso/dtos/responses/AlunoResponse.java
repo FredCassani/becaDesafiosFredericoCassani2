@@ -3,7 +3,6 @@ package com.plataforma.curso.dtos.responses;
 import lombok.Data;
 
 @Data
-
 public class AlunoResponse {
 
     private Long id;

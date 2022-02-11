@@ -13,7 +13,7 @@ public interface AlunoService {
 
     AlunoResponse atualizar(AlunoRequest alunoRequest , Long id);
 
-    ResponseEntity<?> deletar(Long id);
+    void deletar(Long id);
 
     List<AlunoResponse> listar();
 

@@ -27,6 +27,7 @@ public class CursoServiceImp implements CursoService {
     public CursoResponse criar(CursoRequest curso) {
 
         Curso cursoCriado = mapperCursoRequest.toModel(curso);
+
         cursoRepository.save(cursoCriado);
 
         return mapperCursoResponse.toResponse(cursoCriado);
@@ -34,16 +35,16 @@ public class CursoServiceImp implements CursoService {
 
     public CursoResponse atualizar(CursoRequest curso, Long id) {
         Curso cursoAtualizado = cursoRepository.findById(id).get();
+
         mapperCursoAtualizar.Atualizar(curso , cursoAtualizado);
 
         cursoRepository.save(cursoAtualizado);
+
         return mapperCursoResponse.toResponse(cursoAtualizado);
     }
 
     public void deletar(Long id) {
-
         cursoRepository.deleteById(id);
-
     }
 
     public List<CursoResponse> listar() {

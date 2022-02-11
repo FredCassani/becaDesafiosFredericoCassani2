@@ -13,41 +13,43 @@ import java.util.List;
 @RequestMapping("/professor")
 @RestController
 public class ProfessorControler {
-
-    @Autowired
     private ProfessorServiceImp professorService;
 
     @PostMapping
     public ResponseEntity<ProfessorResponse> criar(@RequestBody ProfessorRequest professor) {
-        ProfessorResponse professorCriar = professorService.criar(professor);
-        return ResponseEntity.created(null).body(professorCriar);
 
+        ProfessorResponse professorCriar = professorService.criar(professor);
+
+        return ResponseEntity.created(null).body(professorCriar);
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<ProfessorResponse> atualizar(@RequestBody ProfessorRequest professor, @PathVariable Long id) {
-        ProfessorResponse professorAtualizar = professorService.atualizar(professor, id);
-        return ResponseEntity.ok(professorAtualizar);
 
+        ProfessorResponse professorAtualizar = professorService.atualizar(professor, id);
+
+        return ResponseEntity.ok(professorAtualizar);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletar(@PathVariable Long id) {
-        professorService.deletar(id);
-        return ResponseEntity.noContent().build();
 
+        professorService.deletar(id);
+
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping
     public ResponseEntity<List<ProfessorResponse>> listar() {
+
          List listaProfessor = professorService.listar();
 
         return ResponseEntity.ok(listaProfessor);
-
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ProfessorResponse> obter(@PathVariable Long id) {
+
         ProfessorResponse professorObter = professorService.obter(id);
 
         return ResponseEntity.ok(professorObter);

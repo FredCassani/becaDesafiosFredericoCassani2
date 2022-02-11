@@ -14,10 +14,10 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+
 public class TurmaServiceImp implements TurmaService {
 
     private final TurmaRepository turmaRepository;
-    private final TurmaRequest turmaRequest;
     private final MapperTurmaRequest mapperTurmaRequest;
     private final MapperTurmaAtualizar mapperTurmaAtualizar;
     private final MapperturmaResponse mapperturmaResponse;
@@ -27,11 +27,12 @@ public class TurmaServiceImp implements TurmaService {
         Turma turma = mapperTurmaRequest.toModel(turmaRequest);
         Turma turmaCriado = turmaRepository.save(turma);
         TurmaResponse turmaResponse = mapperturmaResponse.toResponse(turma);
+
         return turmaResponse;
 
     }
 
-    public TurmaResponse atualizar(TurmaRequest turma, Long id) {
+    public TurmaResponse atualizar(TurmaRequest turmaRequest, Long id) {
         Turma turmaAtualizado = turmaRepository.findById(id).get();
         mapperTurmaAtualizar.Atualizar(turmaRequest, turmaAtualizado);
         turmaRepository.save(turmaAtualizado);

@@ -9,9 +9,9 @@ import com.plataforma.curso.mappers.MapperAlunoResponse;
 import com.plataforma.curso.repositories.AlunoRepository;
 import com.plataforma.curso.services.AlunoService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,10 +24,16 @@ public class AlunoServiceImp implements AlunoService {
     private final MapperAlunoResponse mapperAlunoResponse;
     private final MapperAlunoAtualizar mapperAlunoAtualizar;
 
-    public AlunoResponse criar(AlunoRequest alunoRequest) {
+    public AlunoResponse criar(AlunoRequest  alunoRequest) {
+       // if (alunoRequest.getAluno().length() < 3 ) {
+        //throw new TamanhoNaoValidoException ("Descrição não pode ter menos do que 4 caracteres");
+
+   // }
 
         Aluno aluno = mapperAlunoRequest.toModel(alunoRequest);
+
         alunoRepository.save(aluno);
+
         AlunoResponse alunoconvertido2 = mapperAlunoResponse.toResponse(aluno);
 
         return alunoconvertido2;
@@ -35,21 +41,16 @@ public class AlunoServiceImp implements AlunoService {
 
     public AlunoResponse atualizar(AlunoRequest alunoRequest ,  Long id) {
         Aluno alunoListado = alunoRepository.findById(id).get();
-        mapperAlunoAtualizar.atualizar(alunoRequest , alunoListado);
-        alunoRepository.save(alunoListado);
-        return mapperAlunoResponse.toResponse(alunoListado);
 
+        mapperAlunoAtualizar.atualizar(alunoRequest , alunoListado);
+
+        alunoRepository.save(alunoListado);
+
+        return mapperAlunoResponse.toResponse(alunoListado);
     }
 
-    public ResponseEntity<?> deletar(Long id) {
-        return alunoRepository
-                .findById(id)
-                .map(aluno -> {
-                    alunoRepository.deleteById(id);
-                    return ResponseEntity.noContent().build();
-                })
-                .orElse(ResponseEntity.notFound().build());
-
+    public void deletar(Long id) {
+        alunoRepository.deleteById(id);
     }
 
     public List<AlunoResponse> listar() {
@@ -57,12 +58,12 @@ public class AlunoServiceImp implements AlunoService {
         List<AlunoResponse> alunoResponses = new ArrayList<>();
         listaAluno.stream().forEach(aluno -> {
             alunoResponses.add(mapperAlunoResponse.toResponse(aluno));
-
         });
+
         return alunoResponses;
     }
 
-    public AlunoResponse  obter(Long id) {
+    public AlunoResponse obter(Long id) {
         Aluno alunoObtido = alunoRepository.findById(id).get();
         AlunoResponse alunoResponse = mapperAlunoResponse.toResponse(alunoObtido);
         return alunoResponse;

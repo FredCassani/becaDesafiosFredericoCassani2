@@ -21,21 +21,22 @@ public class AlunoController {
     @PostMapping
     public ResponseEntity<AlunoResponse> criar(@RequestBody @Valid AlunoRequest postAlunoRequest) {
         AlunoResponse alunoCriar = alunoServiceImp.criar(postAlunoRequest);
-        return ResponseEntity.created(null).body(alunoCriar);
 
+        return ResponseEntity.created(null).body(alunoCriar);
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<AlunoResponse> atualizar(@RequestBody AlunoRequest aluno, @PathVariable Long id) {
         AlunoResponse alunoAtualizar = alunoServiceImp.atualizar(aluno, id);
-        return ResponseEntity.ok(alunoAtualizar);
 
+        return ResponseEntity.ok(alunoAtualizar);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletar(@PathVariable Long id) {
-       return alunoServiceImp.deletar(id);
+    public void deletar(@PathVariable Long id) {
+       alunoServiceImp.deletar(id);
     }
+
     @GetMapping
     public ResponseEntity<List<AlunoResponse>> listar() {
 
